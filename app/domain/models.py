@@ -11,5 +11,6 @@ class UserModel(db.Model):
 class TaskModel(db.Model):
     __tablename__ = 'tasks'
     id = db.Column(db.String, primary_key=True)
+    name = db.Column(db.String(200), unique=True, nullable=False, index=True)
     status = db.Column(db.Enum(TaskStatus), default=TaskStatus.PENDING)
     priority = db.Column(db.Enum(TaskPriority), default=TaskPriority.HIGH)

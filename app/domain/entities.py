@@ -13,7 +13,6 @@ class UserEntity(Entity):
         
     def to_dict(self):
         return {
-            "id": self.id,
             "username": self.name,
             "email": self.email
         }
@@ -34,4 +33,12 @@ class TaskEntity(Entity):
         self.name = name
         self.status = status
         self.priority = priority
+        
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "status": self.status,
+            "priority": self.priority
+        }
         
