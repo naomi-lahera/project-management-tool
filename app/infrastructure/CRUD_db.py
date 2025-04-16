@@ -1,4 +1,4 @@
-from extensions import db
+from ..extensions import db
 class CRUD:
     def __init__(self):
         pass

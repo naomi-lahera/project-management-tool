@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, abort
-from domain.services.user_service import UserService
+from ..domain.services.user_service import UserService
 
 user_bp = Blueprint('user_api', __name__)
 

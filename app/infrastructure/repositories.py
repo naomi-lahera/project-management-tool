@@ -1,5 +1,5 @@
-from infrastructure.CRUD_db import CRUD
-from domain.models import UserModel
+from ..infrastructure.CRUD_db import CRUD
+from ..domain.models import UserModel
 
 class UserRepository(CRUD):
     def addUser(self):

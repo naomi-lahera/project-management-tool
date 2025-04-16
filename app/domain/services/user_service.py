@@ -1,6 +1,6 @@
-from infrastructure.repositories import UserRepository
-from utils.utils import Errors, _generate_id_from_email
-from domain.entities import UserEntity
+from ...infrastructure.repositories import UserRepository
+from ...utils.utils import Errors, _generate_id_from_email
+from ...domain.entities import UserEntity
 from werkzeug.security import generate_password_hash, check_password_hash
 
 class UserService():
