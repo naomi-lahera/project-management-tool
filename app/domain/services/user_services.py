@@ -1,5 +1,5 @@
 from ...infrastructure.users_repositories import UserRepository
-from ...utils.utils import Errors, _generate_id_from_email
+from ...utils.utils import Errors, _generate_id_from_field
 from ..entities import UserEntity
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import current_app
@@ -12,7 +12,7 @@ class UserService():
         if self.repository.exists(username, email):
             return None, Errors.already_exists.value
         
-        user = UserEntity(generate_password_hash(email), username, email, _generate_id_from_email(password))
+        user = UserEntity(generate_password_hash(email), username, email, _generate_id_from_field(password))
        
         user = self.repository.add_user(user)
         

@@ -2,6 +2,7 @@ from flask import Flask
 from .extensions import db, migrate
 from .controllers.home_controller import home_bp
 from .controllers.user_controller import user_bp
+from .controllers.tasks_controller import task_bp
 from .domain import models
 
 from .infrastructure.users_repositories import UserRepository
@@ -34,9 +35,14 @@ def create_app():
     user_repository = UserRepository()
     user_service = UserService(repository=user_repository)
     app.user_service = user_service
+    
+    task_repository = TaskRepository()
+    task_service = TaskService(TaskRepository)
+    app.task_service = task_repository
      
     app.register_blueprint(home_bp)
     app.register_blueprint(user_bp, url_prefix="/users")
+    app.register_blueprint(task_bp, url_prefix= "/tasks")
 
     return app
 

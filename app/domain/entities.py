@@ -36,7 +36,6 @@ class TaskEntity(Entity):
         
     def to_dict(self):
         return {
-            "id": self.id,
             "name": self.name,
             "status": self.status,
             "priority": self.priority
