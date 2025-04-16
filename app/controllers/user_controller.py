@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, abort
 from domain.services.user_service import UserService
 
-user_bp = Blueprint('auth_api', __name__)
+user_bp = Blueprint('user_api', __name__)
 
 @user_bp.route('/register', methods=['POST'])
 def register():
