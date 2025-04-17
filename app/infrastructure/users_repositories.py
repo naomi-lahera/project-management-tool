@@ -3,6 +3,7 @@ from .CRUD_db import CRUD
 from ..domain.models import UserModel
 from ..domain.entities import UserEntity
 from sqlalchemy import or_
+from flask import current_app
 
 #class UserRepository(CRUD):
 class UserRepository():
@@ -30,4 +31,9 @@ class UserRepository():
         user = UserModel.query.filter(or_(UserModel.username == username, UserModel.email == email)).first()
         
         return user is not None
+    
+    def get_by_email(self, email):
+        user = UserModel.query.filter(UserModel.email == email).first()
+        current_app.logger.info(f"Get User by email: {user.username if user else 'No encuentra al usuario'}")
         
+        return UserEntity(user.id, user.username, user.email, user.password_hash)

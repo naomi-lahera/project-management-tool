@@ -26,3 +26,21 @@ def register():
     #     # Log 'e'
     #     abort(500)
         return {"msg": "Error"}
+    
+@user_bp.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    user_service: UserService = current_app.user_service
+    
+    if not data or not data.get('email') or not data.get('password'):
+        abort(400, description="Email y contraseña son requeridos.")
+    
+    try:
+        token, code = user_service.login_user(data['email'], data['password'])
+        
+        if not token:
+            return jsonify({"msg": 'Error'}), code
+        
+        return jsonify({"access_token": token}), 200
+    except ValueError as e:
+        abort(401, description=str(e))

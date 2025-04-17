@@ -18,6 +18,8 @@ from logging import StreamHandler
 def create_app():
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///projects-managment.db'
+    app.config['SECRET_KEY'] = 'hgjnlkvfghjnkulukjlmfhgjhjkujiokolp'
+    
     #app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     # Configuración básica de logging
@@ -43,6 +45,7 @@ def create_app():
     app.register_blueprint(home_bp)
     app.register_blueprint(user_bp, url_prefix="/users")
     app.register_blueprint(task_bp, url_prefix= "/tasks")
+    
 
     return app
 
