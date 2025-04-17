@@ -33,8 +33,10 @@ class TaskService:
         if not self.user_project_repository.exist_by_id(user_id=project_manager.id, project_id=project.id):
             return None, Errors.doesnt_exist.value
         
-        if not status: status = TaskStatus.PENDING
+        if not status: status = TaskStatus.PENDING 
+        else: TaskStatus(status)
         if not priority: priority = TaskPriority.HIGH
+        else: TaskPriority(priority)
         
         task = self.task_repository.create_task(
             task_id=_generate_id_from_field(name), 
