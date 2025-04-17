@@ -7,6 +7,7 @@ st.set_page_config(page_title="Task Manager", page_icon="✅")
 st.title("Welcome to your Task Manager")
 
 user = st.session_state["user"]
+print(user.username if user else "No hay usuario")
 
 if user:
     st.success(f"Hello, {user.username}!")
@@ -19,7 +20,6 @@ else:
     with col1:
         if st.button("Log In 🔐"):
             st.switch_page("pages/Login.py")
-    
     with col2:
         if st.button("Register 📝"):
             st.switch_page("pages/Register.py")
