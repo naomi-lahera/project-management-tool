@@ -14,6 +14,8 @@ def create_task():
     if not data.get('name', None) or not data.get('project_name', None) or not data.get('asigned_user_email', None):
         abort(400, description="Faltan campos requeridos: name or project_name")
                 
+    # current_app.logger.info(f"CONTROLLER 1 Crear tarea: {data.get('name')}")
+    
     try:
         asigned_user_email = data["asigned_user_email"]
         project_name = data["project_name"]
@@ -21,7 +23,7 @@ def create_task():
         status = data.get('status', None)
         priority = data.get('priority', None)
         
-        current_app.logger.info(f"Tarea creada /create: {name}, {status}, {priority}, {project_name}")
+        current_app.logger.info(f"CONTROLLER 2 Crear tarea: {name}, {status}, {priority}, {project_name}")
         
         result, msg = tasks_service.create_task(
             name=name,

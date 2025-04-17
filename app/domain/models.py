@@ -48,6 +48,6 @@ class UserProjectModel(db.Model):
 
     user = db.relationship("UserModel", back_populates="user_projects")
     project = db.relationship("ProjectModel", back_populates="user_projects")
-    tasks = db.relationship("TaskModel", back_populates="user_project", cascade="all, delete")
+    tasks = db.relationship("TaskModel", back_populates="user_project") #, cascade="all, delete"
 
     

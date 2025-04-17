@@ -31,6 +31,6 @@ class UserRepository():
     
     def get_by_email(self, email):
         user = UserModel.query.filter(UserModel.email == email).first()
-        current_app.logger.info(f"Get User by email: {user.username if user else 'No encuentra al usuario'}")
+        # current_app.logger.info(f"Get User by email: {user.username if user else 'No encuentra al usuario'}")
         
         return None if not user else UserEntity(user.id, user.username, user.email, user.password_hash)

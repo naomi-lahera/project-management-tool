@@ -5,6 +5,7 @@ from ...infrastructure.projects_repository import ProjectRepository
 from ...infrastructure.users_repositories import UserRepository
 from ...infrastructure.user_project_repository import UserProjectRepository
 from ...utils.utils import _generate_id_from_field, Errors
+from flask import current_app
 
 class TaskService:
     def __init__(
@@ -20,18 +21,28 @@ class TaskService:
         self.user_project_repository: UserProjectRepository = user_project_repository
         
     def create_task(self, name, status, priority, project_manager_email, project_name, asigned_user_email):
+        # current_app.logger.info(f"SERVICE 0 Crear tarea: {project_manager_email}")
+        
         project_manager = self.user_repository.get_by_email(project_manager_email)
         asigned_user = self.user_repository.get_by_email(asigned_user_email)
         project = self.project_repository.find_by_name(project_name)
         
+        # current_app.logger.info(f"SERVICE 0 Crear tarea: {project_manager_email}")
+        
         if not self.user_project_repository.is_owner(project_manager, project):
             return None, Errors.conflict.value
         
+        current_app.logger.info(f"SERVICE 0 Crear tarea: {project_manager_email}")
+        
         if not project or not asigned_user:
             return None, Errors.doesnt_exist.value
+        
+        current_app.logger.info(f"SERVICE 1 Crear tarea: {project_manager.name}, {asigned_user.name}")
          
         if not self.user_project_repository.exist_by_id(user_id=project_manager.id, project_id=project.id):
             return None, Errors.doesnt_exist.value
+        
+        current_app.logger.info(f"SERVICE 2 Crear tarea: {project_manager.name}, {asigned_user.name}")
         
         if not status: status = TaskStatus.PENDING 
         else: TaskStatus(status)
