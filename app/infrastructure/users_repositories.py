@@ -1,8 +1,6 @@
 from ..extensions import db
-from .CRUD_db import CRUD
 from ..domain.models import UserModel
 from ..domain.entities import UserEntity
-from sqlalchemy import or_
 from flask import current_app
 
 #class UserRepository(CRUD):

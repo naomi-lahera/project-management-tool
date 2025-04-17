@@ -42,7 +42,7 @@ def create_app():
     app.user_service = user_service
     
     task_repository = TaskRepository()
-    task_service = TaskService(repository=task_repository)
+    task_service = TaskService(task_repository=task_repository)
     app.task_service = task_service
     
     project_repository = ProjectRepository(user_repository)

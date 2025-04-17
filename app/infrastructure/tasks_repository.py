@@ -18,9 +18,9 @@ class TaskRepository(CRUD):
         db.session.commit()
         return task
         
-    def exists(self, name):
-        # task = TaskModel.query.filter(TaskModel.name.lower().replace(' ', '') == name.lower().replace(' ', '')).first()
+    # def exists(self, name):
+    #     # task = TaskModel.query.filter(TaskModel.name.lower().replace(' ', '') == name.lower().replace(' ', '')).first()
         
-        # return task is not None
+    #     # return task is not None
         
-        return False
+    #     return False

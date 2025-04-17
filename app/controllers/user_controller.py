@@ -17,7 +17,7 @@ def register():
     try:     
         result, msg = user_service.register_user(data['username'], data['email'], data['password'])
         # current_app.logger.info(f"Usuario creado /register: {result.name if result else msg}")
-        return jsonify(result.to_dict() if result else result), 200
+        return (jsonify({"msg": msg}), 409) if not result else (jsonify(result.to_dict()), 200)
     except ValueError as e:
     #     abort(409, description=str(e)) # 409 Conflict
     # except Exception as e:
