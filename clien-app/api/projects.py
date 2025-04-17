@@ -7,3 +7,6 @@ def get_all():
     user: User = st.session_state["user"]
     
     return [Project("Project 1", "Descripcion del primer proyecto", False)]
+
+def create(name, description):
+    return True

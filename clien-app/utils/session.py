@@ -12,5 +12,5 @@ def init_session():
 def login_user(user):
     st.session_state["user"] = user
     
-def projects(projects):
+def save_projects(projects):
     st.session_state["projects"] = projects
