@@ -21,5 +21,6 @@ def create_project():
             return jsonify({"msg": msg}), 409
         
         return jsonify(result.to_dict()), 200
-    except:
-        return jsonify({"mdg": "Error"}), 500
+    except ValueError as e:
+        abort(500, description=str(e))
+        

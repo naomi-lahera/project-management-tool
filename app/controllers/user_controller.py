@@ -1,7 +1,8 @@
 from ..domain.services.user_services import UserService
 from ..domain.entities import UserEntity
-from flask import Blueprint, request, jsonify, abort, current_app
+from flask import Blueprint, request, jsonify, abort, current_app, g
 from ..utils.utils import Errors
+from ..utils.utils import jwt_required
 
 user_bp = Blueprint('user_api', __name__)
 
@@ -34,9 +35,23 @@ def login():
         abort(400, description="Email and password required.")
     try:
         token, msg = user_service.login_user(data['email'], data['password'])
-        user: UserEntity = user_service.get_by_email(email=data['email'])
+        user, msg = user_service.get_by_email(email=data['email'])
         if not token:
             return jsonify({"msg": msg}), 500
         return jsonify({"name": user.name, "email":user.email, "access_token": token}), 200
     except ValueError as e:
-        abort(401, description=str(e))
+        abort(500, description=str(e))
+        
+        
+@user_bp.route('/get_all_projects', methods=['GET'])
+@jwt_required
+def get_all():
+    user_service: UserService = current_app.user_service
+    try:
+        projects, msg = user_service.get_all_projects(g.user_email)
+        if projects:
+            return {"projects": [proj.to_dict() for proj in projects]}, 200
+        else:
+            return jsonify({"msg": msg}), 500
+    except ValueError as e:
+        abort(500, description=str(e))

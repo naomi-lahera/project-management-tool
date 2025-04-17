@@ -1,6 +1,6 @@
 from ..extensions import db
-from ..domain.models import UserModel
-from ..domain.entities import UserEntity
+from ..domain.models import UserModel, ProjectModel, UserProjectModel
+from ..domain.entities import UserEntity, ProjectEntity
 from flask import current_app
 
 #class UserRepository(CRUD):
@@ -34,3 +34,7 @@ class UserRepository():
         # current_app.logger.info(f"Get User by email: {user.username if user else 'No encuentra al usuario'}")
         
         return None if not user else UserEntity(user.id, user.username, user.email, user.password_hash)
+    
+    def get_all_projects(self, user_email):
+        projects = db.session.query(ProjectModel).join(UserProjectModel).join(UserModel).filter(UserModel.email == user_email).all()
+        return [ProjectEntity(proj.id, proj.name, proj.description, proj.archivated) for proj in projects]

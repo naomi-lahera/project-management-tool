@@ -54,3 +54,4 @@ class ProjectRepository:
         project_model = ProjectModel.query.filter(ProjectModel.name == name).first()
         # current_app.logger.info(f"Get project by name: {project_model.name if project_model else 'No encuentra al usuario'}")
         return ProjectEntity(project_model.id, project_model.name, project_model.description, project_model.archivated) if project_model else None
+    

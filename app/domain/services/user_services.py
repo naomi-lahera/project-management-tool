@@ -48,4 +48,7 @@ class UserService():
         return token, 'OK'
     
     def get_by_email(self, email):
-        return self.repository.get_by_email(email)
+        return self.repository.get_by_email(email), 'OK'
+    
+    def get_all_projects(self, user_email):
+        return self.repository.get_all_projects(user_email=user_email), 'OK'
