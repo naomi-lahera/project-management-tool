@@ -3,13 +3,16 @@ from .extensions import db, migrate
 from .controllers.home_controller import home_bp
 from .controllers.user_controller import user_bp
 from .controllers.tasks_controller import task_bp
+from .controllers.project_controller import project_bp
 from .domain import models
 
 from .infrastructure.users_repositories import UserRepository
 from .infrastructure.tasks_repository import TaskRepository
+from .infrastructure.projects_repository import ProjectRepository
 
 from .domain.services.user_services import UserService
 from .domain.services.task_services import TaskService
+from .domain.services.project_service import ProjectService
 
 import os
 import logging
@@ -40,12 +43,16 @@ def create_app():
     
     task_repository = TaskRepository()
     task_service = TaskService(TaskRepository)
-    app.task_service = task_repository
+    app.task_service = task_service
+    
+    project_repository = ProjectRepository()
+    project_service = ProjectService(TaskRepository)
+    app.project_service = project_service 
      
     app.register_blueprint(home_bp)
     app.register_blueprint(user_bp, url_prefix="/users")
     app.register_blueprint(task_bp, url_prefix= "/tasks")
-    
+    app.register_blueprint(project_bp, url_prefix= "/projects")
 
     return app
 
