@@ -41,3 +41,16 @@ class TaskEntity(Entity):
             "priority": self.priority
         }
         
+class ProjectEntity(Entity):
+    def __init__(self, id, name, description, archivated=False):
+        super().__init__(id)
+        self.name = name
+        self.description = description
+        self.archivated = archivated
+        
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "description": self.description,
+            "archivated": self.archivated 
+        }

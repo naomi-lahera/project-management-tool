@@ -4,7 +4,7 @@ from .controllers.home_controller import home_bp
 from .controllers.user_controller import user_bp
 from .controllers.tasks_controller import task_bp
 from .controllers.project_controller import project_bp
-from .domain import models
+from .domain.models import *
 
 from .infrastructure.users_repositories import UserRepository
 from .infrastructure.tasks_repository import TaskRepository
@@ -42,11 +42,11 @@ def create_app():
     app.user_service = user_service
     
     task_repository = TaskRepository()
-    task_service = TaskService(TaskRepository)
+    task_service = TaskService(repository=task_repository)
     app.task_service = task_service
     
-    project_repository = ProjectRepository()
-    project_service = ProjectService(TaskRepository)
+    project_repository = ProjectRepository(user_repository)
+    project_service = ProjectService(reposotory=project_repository)
     app.project_service = project_service 
      
     app.register_blueprint(home_bp)
