@@ -3,3 +3,4 @@ migrations
 instance
 __pycache__
 SECRET_KEY.txt
+external_tests

@@ -13,19 +13,17 @@ def register():
     data = request.get_json()
     
     if not data or not data.get('username') or not data.get('email') or not data.get('password'):
-        abort(400, description="Faltan campos requeridos: username, email, password.")
-    try:
-        # 👀        
-        result, code = user_service.register_user(data['username'], data['email'], data['password'])
-        current_app.logger.info(f"Usuario creado /register: {result.name if result else code}")
-        
-        return jsonify(result.to_dict() if result else result), code
+        abort(400, description="Missing: username, email or password.")
+    try:     
+        result, msg = user_service.register_user(data['username'], data['email'], data['password'])
+        # current_app.logger.info(f"Usuario creado /register: {result.name if result else msg}")
+        return jsonify(result.to_dict() if result else result), 200
     except ValueError as e:
     #     abort(409, description=str(e)) # 409 Conflict
     # except Exception as e:
     #     # Log 'e'
     #     abort(500)
-        return {"msg": "Error"}
+        return jsonify({"msg": "Error"}), 500
     
 @user_bp.route('/login', methods=['POST'])
 def login():
@@ -33,14 +31,11 @@ def login():
     user_service: UserService = current_app.user_service
     
     if not data or not data.get('email') or not data.get('password'):
-        abort(400, description="Email y contraseña son requeridos.")
-    
+        abort(400, description="Email and password required.")
     try:
-        token, code = user_service.login_user(data['email'], data['password'])
-        
+        token, msg = user_service.login_user(data['email'], data['password'])
         if not token:
-            return jsonify({"msg": 'Error'}), code
-        
+            return jsonify({"msg": msg}), 500
         return jsonify({"access_token": token}), 200
     except ValueError as e:
         abort(401, description=str(e))
