@@ -9,6 +9,7 @@ from .domain.models import *
 from .infrastructure.users_repositories import UserRepository
 from .infrastructure.tasks_repository import TaskRepository
 from .infrastructure.projects_repository import ProjectRepository
+from .infrastructure.user_project_repository import UserProjectRepository
 
 from .domain.services.user_services import UserService
 from .domain.services.task_services import TaskService
@@ -41,13 +42,19 @@ def create_app():
     user_service = UserService(repository=user_repository)
     app.user_service = user_service
     
-    task_repository = TaskRepository()
-    task_service = TaskService(task_repository=task_repository)
-    app.task_service = task_service
-    
     project_repository = ProjectRepository(user_repository)
     project_service = ProjectService(reposotory=project_repository)
     app.project_service = project_service 
+    
+    task_repository = TaskRepository()
+    user_project_repository = UserProjectRepository()
+    task_service = TaskService(
+        task_repository=task_repository,
+        user_repository=user_repository,
+        project_repository=project_repository,
+        user_project_repository=user_project_repository
+        )
+    app.task_service = task_service
      
     app.register_blueprint(home_bp)
     app.register_blueprint(user_bp, url_prefix="/users")

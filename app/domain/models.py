@@ -17,11 +17,18 @@ class TaskModel(db.Model):
     status = db.Column(db.Enum(TaskStatus), default=TaskStatus.PENDING)
     priority = db.Column(db.Enum(TaskPriority), default=TaskPriority.MEDIUM)
     
-    # project_id = db.Column(db.String, db.ForeignKey('projects.id'), nullable=False)
-    # user_id = db.Column(db.String, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.String, nullable=False)
+    project_id = db.Column(db.String, nullable=False)
 
-    # project = db.relationship("ProjectModel", backref="tasks")
-    # user = db.relationship("UserModel", backref="tasks")
+    __table_args__ = (
+        db.ForeignKeyConstraint(
+            ['user_id', 'project_id'],
+            ['user_project.user_id', 'user_project.project_id'],
+            name='fk_user_project'
+        ),
+    )
+
+    user_project = db.relationship("UserProjectModel", back_populates="tasks")
     
 class ProjectModel(db.Model):
     __tablename__ = 'projects'
@@ -41,4 +48,6 @@ class UserProjectModel(db.Model):
 
     user = db.relationship("UserModel", back_populates="user_projects")
     project = db.relationship("ProjectModel", back_populates="user_projects")
+    tasks = db.relationship("TaskModel", back_populates="user_project", cascade="all, delete")
+
     
