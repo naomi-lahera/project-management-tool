@@ -1,6 +1,6 @@
 import streamlit as st
-from utils.session import init_session, login_user
-from api.user import login
+from utils.session import init_session, login_session
+from api.user import login_api
 from models.models import User
 
 st.set_page_config(page_title="Log In", page_icon="🔑")
@@ -15,13 +15,13 @@ else:
     email = st.text_input("Email")
     password = st.text_input("Password", type="password")
     if st.button("Log In"):
-        user: User = login(email, password)
+        user, msg = login_api(email, password)
         if user:
-            login_user(user)
-            
+            login_session(user)
+
             print(st.session_state["user"].username)
-            
+
             st.success("Login successful!")
             st.switch_page("pages/Projects.py")
         else:
-            st.error("Incorrect username or password.")
+            st.error(msg)

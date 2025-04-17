@@ -20,7 +20,7 @@ else:
 
         if st.button("Create", key="sidebar_create"):
             if project_name.strip() and project_description.strip():
-                success = create(project_name, project_description)
+                success, msg = create(project_name, project_description)
                 if success: st.success(f"Project '{project_name}' created successfully.")
                 else: st.error("Something went wrong")
             else:

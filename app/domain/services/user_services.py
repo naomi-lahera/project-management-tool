@@ -46,3 +46,6 @@ class UserService():
         token = jwt.encode(payload, current_app.config['SECRET_KEY'], algorithm="HS256")
         
         return token, 'OK'
+    
+    def get_by_email(self, email):
+        return self.repository.get_by_email(email)

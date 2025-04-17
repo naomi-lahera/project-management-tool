@@ -34,8 +34,9 @@ def login():
         abort(400, description="Email and password required.")
     try:
         token, msg = user_service.login_user(data['email'], data['password'])
+        user: UserEntity = user_service.get_by_email(email=data['email'])
         if not token:
             return jsonify({"msg": msg}), 500
-        return jsonify({"access_token": token}), 200
+        return jsonify({"name": user.name, "email":user.email, "access_token": token}), 200
     except ValueError as e:
         abort(401, description=str(e))
