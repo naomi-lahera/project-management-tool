@@ -20,3 +20,4 @@ class Errors(Enum):
     server_error = "Server error."
     login_fail = "Login failed. Incorrect user or email"
     singup_fail = "Registration failed. Try another username or email"
+    already_exists = "Already exists"

@@ -22,7 +22,7 @@ else:
             if project_name.strip() and project_description.strip():
                 success, msg = create(project_name, project_description)
                 if success: st.success(f"Project '{project_name}' created successfully.")
-                else: st.error("Something went wrong")
+                else: st.error(msg)
             else:
                 st.warning("Project name and description are required.")
     
