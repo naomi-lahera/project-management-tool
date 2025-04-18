@@ -9,6 +9,12 @@ def init_session():
         st.session_state["projects"] = None
     if not "tasks" in st.session_state:
         st.session_state["tasks"] = None
+        
+def reset_session():
+    st.session_state["BASE_URL"] = "http://127.0.0.1:5000"
+    st.session_state["user"] = None
+    st.session_state["projects"] = None
+    st.session_state["tasks"] = None
     
 def login_session(user):
     st.session_state["user"] = user

@@ -48,9 +48,11 @@ def get_all():
         data = response.json()
         projects = data.get("projects", [])
         
+        print(projects)
+        
         if response.status_code == 200:
-            return [Project(proj["name"], proj["description"], proj["archivated"]) for proj in projects], "OK"
+            return [Project(proj["name"], proj["description"], proj["archivated"]) for proj in projects] , 'OK'
         elif response.status_code == 401:
-            return [], Errors.unauthorized.value
+            return [] , Errors.unauthorized.value
     except:
-        return [], Errors.server_error.value
+        return [] , Errors.server_error.value

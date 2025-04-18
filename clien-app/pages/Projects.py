@@ -30,36 +30,36 @@ else:
             else:
                 st.warning("Project name and description are required.")
     
-if not projects:
-    projects, msg = get_all()
-    save_projects(projects)
-    
-if not projects:
-    st.warning(f"Loading projects failed: {msg}")
+    if not projects:
+        projects, msg = get_all()
+        save_projects(projects)
 
-for project in projects:
-    with st.expander(f"📁 {project.name}"):
-        st.write(f"**Descripción:** {project.description}")
-        # st.write(f"**Archivado:** {'Sí' if project.archivated else 'No'}")
-        
-        # col1, col2, col3, col4 = st.columns(4)
-        # with col1:
-        #     if st.button(f"✏️ Edit", key=f"edit_{project.name}", disabled=project.archivated):
-        #         st.session_state["edit_project"] = project
-        #         st.switch_page("pages/editar_proyecto.py")
-        # with col2:
-        #     if st.button(f"📝 Add task", key=f"add_task_{project.name}", disabled=project.archivated):
-        #         st.session_state["add_task_project"] = project
-        #         st.switch_page("pages/Add_task.py")
-        # with col3:
-        #     if st.button(f"➕ Add User", key=f"add_user_{project.name}", disabled=project.archivated):
-        #         st.session_state["add_user_project"] = project
-        #         st.switch_page("pages/Link.py")
-        # with col4:
-        #     if not project.archivated:
-        #         if st.button("📦 Archive", key=f"archive_{project.name}"):
-        #             archive_project(project.name)
-        #             st.success(f"Project '{project.name}' archived successfully.")
-        #             st.rerun()
-        #     else:
-        #         st.info("This project is archived.")
+    if not projects:
+        st.warning(f"Loading projects failed: {msg}")
+    else:
+        for project in projects:
+            with st.expander(f"📁 {project.name}"):
+                st.write(f"**Descripción:** {project.description}")
+                # st.write(f"**Archivado:** {'Sí' if project.archivated else 'No'}")
+    
+                # col1, col2, col3, col4 = st.columns(4)
+                # with col1:
+                #     if st.button(f"✏️ Edit", key=f"edit_{project.name}", disabled=project.archivated):
+                #         st.session_state["edit_project"] = project
+                #         st.switch_page("pages/editar_proyecto.py")
+                # with col2:
+                #     if st.button(f"📝 Add task", key=f"add_task_{project.name}", disabled=project.archivated):
+                #         st.session_state["add_task_project"] = project
+                #         st.switch_page("pages/Add_task.py")
+                # with col3:
+                #     if st.button(f"➕ Add User", key=f"add_user_{project.name}", disabled=project.archivated):
+                #         st.session_state["add_user_project"] = project
+                #         st.switch_page("pages/Link.py")
+                # with col4:
+                #     if not project.archivated:
+                #         if st.button("📦 Archive", key=f"archive_{project.name}"):
+                #             archive_project(project.name)
+                #             st.success(f"Project '{project.name}' archived successfully.")
+                #             st.rerun()
+                #     else:
+                #         st.info("This project is archived.")
