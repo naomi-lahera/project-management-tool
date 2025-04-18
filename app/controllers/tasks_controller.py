@@ -39,5 +39,5 @@ def create_task():
             return jsonify(result.to_dict() if result else None), 200
         return jsonify({"msg": msg}), 500
     
-    except:
-        return {"msg": "Error"}, 500
+    except ValueError as e:
+        abort(500, description=str(e))
