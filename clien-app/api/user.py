@@ -1,5 +1,5 @@
 import streamlit as st
-from models.models import User
+from models.models import User, Project
 import requests
 from utils.session import Errors
 
@@ -37,3 +37,20 @@ def login_api(email, password):
             return None, Errors.login_fail.value
     except:
         return None, Errors.server_error.value
+    
+def get_all():
+    url = f"{BASE_URL}/get_all_projects"
+    token = st.session_state["user"].token
+    headers = {"Authorization": f"Bearer {token}"}
+    
+    try:
+        response = requests.get(url, headers=headers)        
+        data = response.json()
+        projects = data.get("projects", [])
+        
+        if response.status_code == 200:
+            return [Project(proj["name"], proj["description"], proj["archivated"]) for proj in projects], "OK"
+        elif response.status_code == 401:
+            return [], Errors.unauthorized.value
+    except:
+        return [], Errors.server_error.value

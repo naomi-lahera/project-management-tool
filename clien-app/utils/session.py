@@ -21,3 +21,4 @@ class Errors(Enum):
     login_fail = "Login failed. Incorrect user or email"
     singup_fail = "Registration failed. Try another username or email"
     already_exists = "Already exists"
+    unauthorized = "Unauthorized. Invalid token"
