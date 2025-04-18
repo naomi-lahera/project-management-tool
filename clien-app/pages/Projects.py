@@ -1,6 +1,6 @@
 import streamlit as st
-from api.projects import create, archive_project
-from api.user import get_all
+from api.projects import create
+from api.user import get_all_projects
 from utils.session import save_projects
 
 st.set_page_config(page_title="Projects", page_icon="📁")
@@ -24,24 +24,24 @@ else:
                 success, msg = create(project_name, project_description)
                 if success: 
                     st.success(f"Project '{project_name}' created successfully.")
-                    projects, _ = get_all()
+                    projects, _ = get_all_projects()
                     save_projects(projects)
                 else: st.error(msg)
             else:
                 st.warning("Project name and description are required.")
     
-    if not projects:
-        projects, msg = get_all()
+    if projects is None:  
+        projects, msg = get_all_projects()
         save_projects(projects)
 
-    if not projects:
+    if projects is None:
         st.warning(f"Loading projects failed: {msg}")
     else:
         for project in projects:
             with st.expander(f"📁 {project.name}"):
                 st.write(f"**Descripción:** {project.description}")
                 # st.write(f"**Archivado:** {'Sí' if project.archivated else 'No'}")
-    
+
                 # col1, col2, col3, col4 = st.columns(4)
                 # with col1:
                 #     if st.button(f"✏️ Edit", key=f"edit_{project.name}", disabled=project.archivated):

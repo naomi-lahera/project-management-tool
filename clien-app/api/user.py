@@ -38,7 +38,7 @@ def login_api(email, password):
     except:
         return None, Errors.server_error.value
     
-def get_all():
+def get_all_projects():
     url = f"{BASE_URL}/get_all_projects"
     token = st.session_state["user"].token
     headers = {"Authorization": f"Bearer {token}"}
@@ -48,11 +48,11 @@ def get_all():
         data = response.json()
         projects = data.get("projects", [])
         
-        print(projects)
-        
         if response.status_code == 200:
             return [Project(proj["name"], proj["description"], proj["archivated"]) for proj in projects] , 'OK'
         elif response.status_code == 401:
             return [] , Errors.unauthorized.value
+        else:
+            return [], Errors.server_error.value
     except:
         return [] , Errors.server_error.value

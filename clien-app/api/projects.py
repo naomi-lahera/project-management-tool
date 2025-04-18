@@ -25,13 +25,3 @@ def create(name, description):
             return False, Errors.already_exists.value
     except:
         return False, Errors.server_error.value
-    
-def archive_project(project_name):
-    pass
-
-def delete_project(project_id, token):
-    url = f"{BASE_URL}/projects/{project_id}"
-    headers = {"Authorization": f"Bearer {token}"}
-
-    response = requests.delete(url, headers=headers)
-    return response.status_code == 204

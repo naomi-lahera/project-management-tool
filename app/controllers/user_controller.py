@@ -43,8 +43,8 @@ def get_all():
     user_service: UserService = current_app.user_service
     try:
         projects, msg = user_service.get_all_projects(g.user_email)
-        if projects:
-            return {"projects": [proj.to_dict() for proj in projects]}, 200
+        if projects is not None:
+            return jsonify({"projects": [proj.to_dict() for proj in projects]}), 200
         else:
             return jsonify({"msg": msg}), 500
     except ValueError as e:

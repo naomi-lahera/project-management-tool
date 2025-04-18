@@ -17,6 +17,7 @@ def reset_session():
     st.session_state["tasks"] = None
     
 def login_session(user):
+    reset_session()
     st.session_state["user"] = user
     
 def save_projects(projects):

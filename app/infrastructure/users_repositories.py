@@ -37,4 +37,6 @@ class UserRepository():
     
     def get_all_projects(self, user_email):
         projects = db.session.query(ProjectModel).join(UserProjectModel).join(UserModel).filter(UserModel.email == user_email).all()
-        return [ProjectEntity(proj.id, proj.name, proj.description, proj.archivated) for proj in projects]
+        
+        return [ProjectEntity(proj.id, proj.name, proj.description, proj.archivated) for proj in projects] 
+        
